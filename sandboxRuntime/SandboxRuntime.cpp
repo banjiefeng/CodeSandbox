@@ -15,7 +15,6 @@
 #include <fstream>
 #include <sstream>
 #include <unistd.h>
-
 namespace {
 
 constexpr int kSandboxInternalExitMin = 241;
@@ -140,8 +139,8 @@ void tuneJavaMemoryIfNeeded(const std::vector<std::string>& command, std::int64_
         "m -Xms16m -XX:ReservedCodeCacheSize=16m -XX:CompressedClassSpaceSize=16m -XX:MaxMetaspaceSize=96m";
     setenv("JAVA_TOOL_OPTIONS", opts.c_str(), 1);
 }
-
 }
+
 
 SandboxRunResult SandboxRuntime::runProcess(const SandboxPreparedTask& task, const SandboxInstance& instance) const
 {
@@ -174,7 +173,7 @@ SandboxRunResult SandboxRuntime::runProcess(const SandboxPreparedTask& task, con
 
         runtimeLayout.runStdoutPath = runtimeLayout.rootDir + "/" + std::to_string(i + 1) + ".out";
         runtimeLayout.runStderrPath = runtimeLayout.rootDir + "/" + std::to_string(i + 1) + ".err";
-
+        //注意在重定向标准输出后任何使用向标准输出打印的都会被重定向到out文件，所以一定要清除
         NamespaceManager namespaceManager;
         CgroupManager cgroupManager;
         SeccompManager seccompManager;
@@ -215,6 +214,7 @@ SandboxRunResult SandboxRuntime::runProcess(const SandboxPreparedTask& task, con
 
         // 非 SPJ：使用（去掉末尾空白后的）字符串比较。
         // SPJ：由 spj 返回值决定，不做预比较，避免误判。
+
         if (caseResult.status == JudgeStatus::AC && !task.hasSpj &&
             trimRight(caseResult.personalOutput) != trimRight(caseResult.standardOutput))
         {

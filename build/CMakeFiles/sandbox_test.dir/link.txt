@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/sandbox_test.dir/SandboxTestMain.cpp.o -o sandbox_test  libcodesandbox.a -ljsoncpp -lpthread -lseccomp 

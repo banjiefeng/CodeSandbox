@@ -1,9 +1,7 @@
 #pragma once
 
 #include "../SandboxTypes.hpp"
-#include "CompileQueue.hpp"
 #include "ResultCollector.hpp"
-#include "RunQueue.hpp"
 
 #include <memory>
 #include <string>
@@ -31,8 +29,6 @@ private:
                        std::vector<SandboxTestCase>& testCases,
                        std::string& errorMessage) const;
 
-    CompileQueue compileQueue;
-    RunQueue runQueue;
     ResultCollector resultCollector;
     std::shared_ptr<SandboxPool> sandboxPool;
     std::shared_ptr<CompilerPool> compilerPool;

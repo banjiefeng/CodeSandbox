@@ -1,0 +1,4 @@
+/home/jinzheyu/sandboxSet/CodeSandbox/build/CMakeFiles/codesandbox.dir
+/home/jinzheyu/sandboxSet/CodeSandbox/build/CMakeFiles/sandbox_test.dir
+/home/jinzheyu/sandboxSet/CodeSandbox/build/CMakeFiles/edit_cache.dir
+/home/jinzheyu/sandboxSet/CodeSandbox/build/CMakeFiles/rebuild_cache.dir

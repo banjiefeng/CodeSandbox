@@ -175,14 +175,14 @@
 
 ## 5. 并发与稳定性设计
 
-### 5.1 关键问题修复：Queue 并发错配
+### 5.1 关键问题修复：错误的共享任务队列
 
-之前的实现中，`TaskManager::processTask` 对共享的 `CompileQueue/RunQueue` 做了 `push` 后立刻 `pop` 的同步调用。在多线程并发调用 `submitTask` 时，线程 A 可能 `pop` 到线程 B 的任务，造成提交结果串号，这是严重 correctness bug。
+之前的实现中，`TaskManager::processTask` 对共享任务队列做了 `push` 后立刻 `pop` 的同步调用。在多线程并发调用 `submitTask` 时，线程 A 可能取到线程 B 的任务，造成提交结果串号，这是严重 correctness bug。
 
 修复策略：
 
 - `processTask` 改为对当前 `SandboxPreparedTask` 直接编译与运行。
-- 并发容量控制仍由 `CompilerPool` 与 `SandboxPool/SandboxWorkerPool` 提供，不依赖 Queue 进行跨线程调度。
+- 并发容量控制仍由 `CompilerPool` 与 `SandboxPool/SandboxWorkerPool` 提供，不依赖共享任务队列进行跨线程调度。
 
 ### 5.2 运行并发
 
@@ -202,4 +202,3 @@
 
 - `cmake --build build --target sandbox_test -j`
 - `./build/sandbox_test`
-

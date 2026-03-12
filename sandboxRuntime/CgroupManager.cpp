@@ -4,6 +4,7 @@
 #include <sys/resource.h>
 #include <unistd.h>
 
+#include <iostream>
 #include <algorithm>
 #include <cstdlib>
 #include <cmath>
@@ -50,6 +51,9 @@ bool CgroupManager::apply(int timeLimitMs, std::int64_t memoryLimitBytes, std::s
             ok = ok && writeValue((fs::path(cgPath) / "pids.max").string(), "64");
             ok = ok && writeValue((fs::path(cgPath) / "cpu.max").string(), "100000 100000");
             ok = ok && writeValue((fs::path(cgPath) / "cgroup.procs").string(), std::to_string(getpid()));
+            
+            // std::cout<< "CGroups Launch"<< std::endl;
+
             if (!ok && useStrictMode())
             {
                 error = "写入 cgroup 限制失败。";

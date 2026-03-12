@@ -333,8 +333,10 @@ std::vector<LanguagePrograms> buildPrograms()
 int main()
 {
     setenv("XDOJ_PROBLEMDATA_ROOT", "/tmp/xdoj-problemdata", 1);
+    setenv("XDOJ_CGROUP_ROOT", "/sys/fs/cgroup/xdoj", 1);
+
     unsetenv("XDOJ_CGROUP_STRICT");
-    unsetenv("XDOJ_CGROUP_ROOT");
+    // unsetenv("XDOJ_CGROUP_ROOT");
     unsetenv("XDOJ_NAMESPACE_STRICT");
 
     SandboxService* service = SandboxService::GetInstance();
